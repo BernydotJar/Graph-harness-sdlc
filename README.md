@@ -9,13 +9,17 @@ It combines:
 - Spec-Driven Development
 - Loop Engineering
 - agent role separation
+- reusable skills
 - OpenCode command contracts
 - Context7 documentation checkpoints
 - human approval gates
 - file-bound execution
 - automated verification
+- quality gates
 - production-readiness criteria
 - review artifacts
+- decision records
+- portable examples
 - documented technical debt
 
 The goal is not to generate throwaway prototypes.
@@ -115,11 +119,30 @@ harness-sdlc/
   init.sh
   .opencode/commands/
   .claude/agents/
+  skills/
+  adr/
   docs/
   templates/
+  examples/
   progress/
   specs/
 ```
+
+## Control System
+
+```text
+agents    = roles
+commands  = operational actions
+skills    = specialized reusable capabilities
+templates = reusable artifact formats
+docs      = policy and methodology
+adr       = why major decisions exist
+examples  = small portable reference shapes
+```
+
+Harness SDLC is not a prompt collection.
+
+It is a reusable control system for shipping software with AI agents.
 
 ## First Workflow
 

@@ -12,6 +12,8 @@ The initial harness structure, command contracts, docs, templates, and first spe
 
 The README includes visual workflow diagrams and an ASCII harness cat mascot.
 
+The harness now includes skills, ADRs, quality gates, security/database policies, token economy guidance, review templates, session-resume prompts, and portable examples.
+
 Implementation has not started.
 
 ## Next Action

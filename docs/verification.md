@@ -17,8 +17,10 @@ Run harness validation with:
 - command headings exist
 - Context7 policy exists
 - progress files exist
+- skills exist
+- quality gate docs include all required gates
+- example feature list JSON is valid
 
 Feature specs must define additional verification commands before implementation starts.
 
 Verification results should be recorded in `progress/current.md` or review artifacts when relevant.
-

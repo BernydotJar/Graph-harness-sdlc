@@ -18,6 +18,16 @@ required_files = [
     "docs/methodology.md",
     "docs/modes.md",
     "docs/production-readiness.md",
+    "docs/quality-gates.md",
+    "docs/security-model.md",
+    "docs/database-change-policy.md",
+    "docs/token-economy.md",
+    "docs/loop-engineering.md",
+    "docs/release-readiness.md",
+    "docs/human-in-the-loop.md",
+    "docs/roadmap-design.md",
+    "docs/anti-patterns.md",
+    "docs/decision-records.md",
     "docs/mcp-context7-policy.md",
     "docs/specs.md",
     "docs/verification.md",
@@ -29,6 +39,33 @@ required_files = [
     "templates/prompts/mvp-mode.md",
     "templates/prompts/ship-mode.md",
     "templates/prompts/production-spec-patch.md",
+    "templates/prompts/spec-next.md",
+    "templates/prompts/approve-feature.md",
+    "templates/prompts/implement-mvp.md",
+    "templates/prompts/implement-ship.md",
+    "templates/prompts/review-mvp.md",
+    "templates/prompts/review-ship.md",
+    "templates/prompts/close-feature.md",
+    "templates/prompts/blocker.md",
+    "templates/prompts/resume-session.md",
+    "templates/review/mvp-review.md",
+    "templates/review/ship-review.md",
+    "templates/review/production-review.md",
+    "templates/review/security-review.md",
+    "templates/review/db-review.md",
+    "adr/0001-use-sdd-lifecycle.md",
+    "adr/0002-use-mvp-and-ship-modes.md",
+    "adr/0003-require-human-approval-before-implementation.md",
+    "adr/0004-require-production-reviewer-for-ship-mode.md",
+    "examples/feature_list.example.json",
+    "examples/specs-example/001-auth/requirements.md",
+    "examples/specs-example/001-auth/design.md",
+    "examples/specs-example/001-auth/tasks.md",
+    "examples/specs-example/002-search/requirements.md",
+    "examples/specs-example/002-search/design.md",
+    "examples/specs-example/002-search/tasks.md",
+    "examples/progress-example/current.md",
+    "examples/progress-example/history.md",
     "progress/current.md",
     "progress/history.md",
 ]
@@ -53,6 +90,16 @@ agent_files = [
     ".claude/agents/production-reviewer.md",
 ]
 
+skill_files = [
+    "skills/spec-authoring/skill.md",
+    "skills/production-readiness-review/skill.md",
+    "skills/security-review/skill.md",
+    "skills/db-migration-review/skill.md",
+    "skills/i18n-accessibility-review/skill.md",
+    "skills/prompt-contract-review/skill.md",
+    "skills/test-strategy/skill.md",
+]
+
 required_headings = [
     "MODE:",
     "FEATURE:",
@@ -66,7 +113,7 @@ required_headings = [
 
 errors = []
 
-for file_name in required_files + command_files + agent_files:
+for file_name in required_files + command_files + agent_files + skill_files:
     if not (root / file_name).is_file():
         errors.append(f"missing required file: {file_name}")
 
@@ -120,6 +167,27 @@ if context_policy.is_file():
     for term in ["context7", "next.js", "react", "prisma", "postgresql", "tailwind", "vitest"]:
         if term not in text:
             errors.append(f"docs/mcp-context7-policy.md: missing policy term {term}")
+
+for skill_file in skill_files:
+    path = root / skill_file
+    if not path.is_file():
+        continue
+    text = path.read_text().lower()
+    if "checklist" not in text:
+        errors.append(f"{skill_file}: missing checklist")
+
+quality_gates = root / "docs/quality-gates.md"
+if quality_gates.is_file():
+    text = quality_gates.read_text().lower()
+    for gate in ["spec gate", "approval gate", "implementation gate", "review gate", "production gate", "close gate"]:
+        if gate not in text:
+            errors.append(f"docs/quality-gates.md: missing {gate}")
+
+for example_json in ["examples/feature_list.example.json"]:
+    try:
+        json.loads((root / example_json).read_text())
+    except Exception as exc:
+        errors.append(f"{example_json} is not valid JSON: {exc}")
 
 if errors:
     print("Harness validation failed:")

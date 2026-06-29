@@ -20,7 +20,12 @@ This bootstrap feature creates the harness foundation. It does not implement a s
 - [x] Every operational command defines file read/touch/must-not-touch boundaries.
 - [x] Repository includes Claude agent role files.
 - [x] Repository includes docs for methodology, modes, production readiness, Context7 policy, specs, verification, and conventions.
+- [x] Repository includes docs for quality gates, security model, database change policy, token economy, loop engineering, release readiness, human-in-the-loop, roadmap design, anti-patterns, and decision records.
+- [x] Repository includes ADRs for lifecycle, modes, approval, and SHIP production review decisions.
+- [x] Repository includes reusable skills for spec authoring, production readiness, security, database migration review, i18n/accessibility, prompt contract review, and test strategy.
 - [x] Repository includes feature and prompt templates.
+- [x] Repository includes review templates for MVP, SHIP, production, security, and database review.
+- [x] Repository includes portable examples for feature lists, specs, and progress files.
 - [x] Repository includes progress files.
 - [x] README includes workflow diagrams and an ASCII mascot to explain the harness model.
 - [x] Feature list includes the seven initial harness features.
@@ -33,6 +38,7 @@ This bootstrap feature creates the harness foundation. It does not implement a s
 - Do not implement Feature 1 beyond the harness bootstrap files.
 - Do not add package managers, dependencies, or lockfiles.
 - Do not configure deployment.
+- Do not add a custom CLI, dashboard, database, or agent runtime.
 
 ## i18n
 

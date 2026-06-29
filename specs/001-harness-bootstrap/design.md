@@ -2,7 +2,18 @@
 
 ## Approach
 
-Create a minimal but complete harness skeleton with structured instructions, command contracts, role definitions, documentation, templates, progress files, and a validation script.
+Create a minimal but complete harness skeleton with structured instructions, command contracts, role definitions, documentation, skills, templates, examples, progress files, decision records, and a validation script.
+
+Include portable governance artifacts that make the harness reusable and auditable without adding a custom runtime:
+
+- skills
+- quality gates
+- security and database policies
+- token economy guidance
+- review templates
+- prompts for resume/blocker flows
+- decision records
+- small examples
 
 The bootstrap stops at `spec_ready`. It prepares the repo for human approval and future implementation cycles.
 
@@ -15,8 +26,11 @@ The bootstrap stops at `spec_ready`. It prepares the repo for human approval and
 - `CLAUDE.md`
 - `.opencode/commands/**`
 - `.claude/agents/**`
+- `skills/**`
+- `adr/**`
 - `docs/**`
 - `templates/**`
+- `examples/**`
 - `progress/**`
 - `specs/001-harness-bootstrap/**`
 
@@ -30,8 +44,11 @@ The bootstrap stops at `spec_ready`. It prepares the repo for human approval and
 - `init.sh`
 - `.opencode/commands/**`
 - `.claude/agents/**`
+- `skills/**`
+- `adr/**`
 - `docs/**`
 - `templates/**`
+- `examples/**`
 - `progress/current.md`
 - `progress/history.md`
 - `specs/001-harness-bootstrap/**`
@@ -108,4 +125,3 @@ Expected result:
 ```text
 Harness validation passed.
 ```
-

@@ -7,6 +7,7 @@
 - Created Claude agent role files.
 - Created docs and templates.
 - Added README workflow diagrams and ASCII harness cat mascot.
+- Added P0/P1 harness hardening docs, skills, ADRs, review templates, prompts, and examples.
 - Created first SDD spec.
 - Set status to `spec_ready`.
 - Stopped for human approval.

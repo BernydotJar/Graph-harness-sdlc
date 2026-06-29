@@ -1,5 +1,9 @@
 # harness-sdlc Agent Instructions
 
+RTK means Repo Tooling Kit.
+
+It defines how agents should operate in this repository: supported tools, local commands, forbidden commands, file boundaries, and verification expectations.
+
 You are working inside `harness-sdlc`, a reusable agentic SDLC harness for shipping real software through spec-driven delivery.
 
 Tagline:
@@ -132,3 +136,59 @@ Run `./init.sh` after harness structure changes.
 
 For application features, specs must define verification commands before implementation begins.
 
+## Supported Agent Tools
+
+The harness is designed to be portable across agent tools that can read files, edit files, run local commands, and respect command contracts.
+
+Supported patterns:
+
+- Claude role files under `.claude/agents/`
+- OpenCode commands under `.opencode/commands/`
+- Codex-style repository instructions through `AGENTS.md`
+- generic reusable skills under `skills/`
+
+## Command Conventions
+
+Operational commands must include:
+
+- `MODE:`
+- `FEATURE:`
+- `STATE:`
+- `SOURCE OF TRUTH:`
+- `DO:`
+- `DON'T:`
+- `OUTPUT:`
+- `STOP:`
+
+They must also define:
+
+- FILES YOU MAY READ
+- FILES YOU MAY TOUCH
+- FILES YOU MUST NOT TOUCH
+
+## Allowed Local Commands
+
+Allowed by default:
+
+- `./init.sh`
+- read-only file inspection commands
+- targeted search commands
+- project-specific verification commands listed in an approved spec
+
+## Forbidden Without Explicit Approval
+
+- package installs
+- schema changes
+- migrations
+- database write commands
+- destructive filesystem commands
+- commands that expose secrets
+- deployment or release commands
+- network calls not required by an approved docs checkpoint
+
+## Environment Assumptions
+
+- `bash` is available for `init.sh`.
+- `python3` is available for validation.
+- The repository may be reused in projects with different language stacks.
+- No custom harness runtime, dashboard, or database is required.
