@@ -1,0 +1,64 @@
+{
+  "repository": "harness-sdlc",
+  "tagline": "Spec-driven agentic delivery for shippable software.",
+  "allowed_statuses": [
+    "pending",
+    "spec_ready",
+    "approved",
+    "in_progress",
+    "review",
+    "done",
+    "blocked"
+  ],
+  "features": [
+    {
+      "id": "001-harness-bootstrap",
+      "title": "Harness bootstrap",
+      "mode": "MVP",
+      "status": "spec_ready",
+      "summary": "Create the initial reusable harness structure, instructions, docs, templates, command contracts, and verification script."
+    },
+    {
+      "id": "002-command-contracts",
+      "title": "Command contracts",
+      "mode": "SHIP",
+      "status": "pending",
+      "summary": "Harden operational command prompts with consistent headings, file boundaries, and lifecycle transitions."
+    },
+    {
+      "id": "003-mode-system-mvp-and-ship",
+      "title": "MVP and SHIP mode system",
+      "mode": "SHIP",
+      "status": "pending",
+      "summary": "Define mode selection, mode-specific criteria, and feature closure behavior."
+    },
+    {
+      "id": "004-production-readiness-gates",
+      "title": "Production-readiness gates",
+      "mode": "SHIP",
+      "status": "pending",
+      "summary": "Formalize SHIP mode criteria for security, data correctness, performance, failure modes, observability, tests, UX, and operations."
+    },
+    {
+      "id": "005-context7-mcp-policy",
+      "title": "Context7 MCP policy",
+      "mode": "MVP",
+      "status": "pending",
+      "summary": "Document when agents must use current external documentation checkpoints and when local bookkeeping is enough."
+    },
+    {
+      "id": "006-review-artifacts",
+      "title": "Review artifacts",
+      "mode": "SHIP",
+      "status": "pending",
+      "summary": "Standardize reviewer outputs, evidence capture, rejection reasons, and closure records."
+    },
+    {
+      "id": "007-template-packaging",
+      "title": "Template packaging",
+      "mode": "SHIP",
+      "status": "pending",
+      "summary": "Package the harness so it can be reused as a clean starter for future application repos."
+    }
+  ]
+}
