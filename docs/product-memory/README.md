@@ -13,6 +13,11 @@ Product-memory documents:
 
 - [`campaign-os-north-star.md`](./campaign-os-north-star.md) — CampaignOS product thesis, virtual campaign-team operating model, War Room workflow, relationship between `harness-sdlc`, `OS-Electoral`, and `LA_muni_RAG`, SaaS direction, safety boundaries, and roadmap.
 
+## Related long-session assets
+
+- [`../../templates/long-session/autonomous-implementation-goal.md`](../../templates/long-session/autonomous-implementation-goal.md) — reusable autonomous implementation contract.
+- [`../../examples/campaign-os/C1-FRONT-002-long-session-goal.md`](../../examples/campaign-os/C1-FRONT-002-long-session-goal.md) — first CampaignOS goal draft for the Campaign Team Command Center.
+
 Rule:
 
 > Product memory explains why and where. Approved specifications define what may be built now.
