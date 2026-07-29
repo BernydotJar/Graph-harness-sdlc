@@ -30,7 +30,7 @@ The repository must not hardcode a user-specific absolute path such as `/Users/<
 
 ## Capability, not dependency
 
-This skill is not owned by `harness-sdlc`, `OS-Electoral`, or `LA_muni_RAG`.
+This skill is not owned by `Graph-harness-sdlc`, `OS-Electoral`, or `LA_muni_RAG`.
 
 It must be treated as an optional environment capability:
 

@@ -2,7 +2,7 @@
 
 ## Summary
 
-Create the initial reusable `harness-sdlc` structure for spec-driven agentic delivery.
+Create the initial reusable `Graph-harness-sdlc` structure for spec-driven agentic delivery.
 
 The feature establishes repository instructions, feature tracking, command contracts, agent role definitions, docs, templates, progress records, and validation.
 

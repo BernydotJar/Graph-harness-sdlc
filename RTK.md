@@ -1,10 +1,10 @@
-# harness-sdlc Agent Instructions
+# Graph-harness-sdlc Agent Instructions
 
 RTK means Repo Tooling Kit.
 
 It defines how agents should operate in this repository: supported tools, local commands, forbidden commands, file boundaries, and verification expectations.
 
-You are working inside `harness-sdlc`, a reusable agentic SDLC harness for shipping real software through spec-driven delivery.
+You are working inside `Graph-harness-sdlc`, a reusable agentic SDLC harness for shipping real software through spec-driven delivery.
 
 Tagline:
 

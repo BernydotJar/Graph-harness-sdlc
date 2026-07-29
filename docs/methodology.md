@@ -1,6 +1,6 @@
 # Methodology
 
-`harness-sdlc` combines Spec-Driven Development and Loop Engineering.
+`Graph-harness-sdlc` combines Spec-Driven Development and Loop Engineering.
 
 Spec-Driven Development means the spec is the source of truth before implementation begins. Requirements, design, and tasks must exist before code changes.
 

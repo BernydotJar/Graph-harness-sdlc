@@ -11,7 +11,7 @@ Product-memory documents:
 
 ## Current memories
 
-- [`campaign-os-north-star.md`](./campaign-os-north-star.md) — CampaignOS product thesis, virtual campaign-team operating model, War Room workflow, relationship between `harness-sdlc`, `OS-Electoral`, and `LA_muni_RAG`, SaaS direction, safety boundaries, and roadmap.
+- [`campaign-os-north-star.md`](./campaign-os-north-star.md) — CampaignOS product thesis, virtual campaign-team operating model, War Room workflow, relationship between `Graph-harness-sdlc`, `OS-Electoral`, and `LA_muni_RAG`, SaaS direction, safety boundaries, and roadmap.
 - [`premium-slate-ui-capability.md`](./premium-slate-ui-capability.md) — optional global design capability for obsidian-slate interfaces, interactive canvas patterns, circular view transitions, accessibility fallbacks, and portability rules.
 
 ## Related long-session assets

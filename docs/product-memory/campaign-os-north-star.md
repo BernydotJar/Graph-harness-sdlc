@@ -3,12 +3,12 @@
 Status: Strategic product memory  
 Last updated: 2026-07-15  
 Decision owner: Human product owner  
-Applies to: `harness-sdlc`, `OS-Electoral`, `LA_muni_RAG`, and the future CampaignOS SaaS  
+Applies to: `Graph-harness-sdlc`, `OS-Electoral`, `LA_muni_RAG`, and the future CampaignOS SaaS
 Implementation authority: None by itself
 
 > This document preserves product direction, architectural intent, repository boundaries, safety constraints, and shared vocabulary.
 >
-> It is not an approved feature specification. No agent may implement product code from this document alone. Every increment must still enter `feature_list.json`, receive an approved spec, obey file boundaries, pass verification, and complete review through `harness-sdlc`.
+> It is not an approved feature specification. No agent may implement product code from this document alone. Every increment must still enter `feature_list.json`, receive an approved spec, obey file boundaries, pass verification, and complete review through `Graph-harness-sdlc`.
 
 ---
 
@@ -377,7 +377,7 @@ Sensitive outbound actions remain human-gated.
 
 ## 7. Repository responsibilities
 
-### 7.1 `harness-sdlc`
+### 7.1 `Graph-harness-sdlc`
 
 Role: delivery-control system.
 
@@ -479,7 +479,7 @@ Do not create this repository or split services until an approved architecture s
 The intended relationship is:
 
 ```text
-harness-sdlc
+Graph-harness-sdlc
   controls how changes are specified, built, verified, reviewed, and shipped
 
 OS-Electoral

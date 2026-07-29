@@ -1,10 +1,10 @@
 # Goal Prompt
 
-You are working inside `harness-sdlc`, a reusable agentic SDLC harness template.
+You are working inside `Graph-harness-sdlc`, a reusable agentic SDLC harness template.
 
 Repository name:
 
-`harness-sdlc`
+`Graph-harness-sdlc`
 
 Tagline:
 

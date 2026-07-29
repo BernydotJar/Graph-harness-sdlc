@@ -1,6 +1,6 @@
 {
   "repository": "example-product",
-  "tagline": "Example product using harness-sdlc.",
+  "tagline": "Example product using Graph-harness-sdlc.",
   "allowed_statuses": [
     "pending",
     "spec_ready",

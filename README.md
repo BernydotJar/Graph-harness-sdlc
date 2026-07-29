@@ -1,172 +1,106 @@
-# harness-sdlc
+<div align="center">
 
-Spec-driven agentic delivery for shippable software.
+<img src="assets/graph-harness-cats.svg" alt="Three cats connected as an executable delivery graph" width="900" />
 
-`harness-sdlc` is a reusable development harness for building applications with AI agents without letting the agent drift, overbuild, or silently change scope.
+# Graph Harness SDLC
 
-It combines:
+**Autonomía estructurada sobre un grafo ejecutable, con estado tipado, evidencia trazable y reparación localizada.**
 
-- Spec-Driven Development
-- Loop Engineering
-- agent role separation
-- reusable skills
-- OpenCode command contracts
-- Context7 documentation checkpoints
-- human approval gates
-- file-bound execution
-- automated verification
-- quality gates
-- production-readiness criteria
-- review artifacts
-- decision records
-- portable examples
-- documented technical debt
+</div>
 
-The goal is not to generate throwaway prototypes.
+`Graph Harness SDLC` es un sistema reutilizable para construir software con agentes de IA sin depender de una conversación monolítica ni de ciclos que pierden contexto. Convierte requisitos, tareas, decisiones, verificaciones y fallos en nodos y relaciones explícitas que pueden ejecutarse, auditarse y repararse.
 
-The goal is to ship product increments through controlled agentic workflows.
-
-## Visual Model
+## Modelo
 
 ```mermaid
 flowchart LR
-  idea[Idea] --> spec[Spec]
-  spec --> approval[Human approval]
-  approval --> build[Implementation]
-  build --> verify[Verification]
-  verify --> review[Review]
-  review --> ship[Done]
-  review --> fixes[Fixes required]
-  fixes --> build
+  R[Requirement] --> S[Spec]
+  S --> A{Human approval}
+  A --> T[Task graph]
+  T --> E[Executor]
+  E --> V[Verification]
+  V -->|pass| D[Done]
+  V -->|fail| F[Localized repair]
+  F --> T
+  E --> X[Evidence]
+  X --> V
 ```
 
-```mermaid
-flowchart TD
-  human[Human] --> leader[Leader]
-  leader --> spec_author[Spec Author]
-  leader --> implementer[Implementer]
-  leader --> reviewer[Reviewer]
-  reviewer --> production_reviewer[Production Reviewer]
-
-  spec_author --> specs[requirements.md + design.md + tasks.md]
-  implementer --> code[Approved file changes]
-  reviewer --> report[Review artifact]
-  production_reviewer --> gates[SHIP gates]
-```
-
-## Harness Cat
+El agente no es el centro de la arquitectura. Es un ejecutor intercambiable dentro de un grafo gobernado por dependencias, capacidades, permisos y gates.
 
 ```text
- |\__/,|   (`\
- |_ _  |.--.) )
- ( T   )     /
- /[=H=]\    /
-(((^_(((/(((_/
-
-             harness-sdlc
-Spec first. Build second. Ship clean.
-
-[SPEC]---[APPROVE]---[BUILD]---[VERIFY]---[REVIEW]---[SHIP]
-
-leash   : file boundaries
-collar  : human approval gates
-harness : mode-specific gates
+Task node -> Capability -> Scheduler -> Executor -> Evidence -> Gate
 ```
 
-## Modes
+## Qué incorpora
 
-### MVP Mode
+- Spec-Driven Development
+- Harness Engineering
+- Loop Engineering
+- grafos de ejecución tipados
+- separación de roles y capacidades
+- aprobación humana
+- límites de archivos y permisos
+- evidencia verificable
+- quality gates por modo
+- checkpoints y recuperación
+- reparación localizada del subgrafo afectado
+- decisiones y deuda técnica trazables
 
-For fast, validated prototypes.
-
-MVP Mode still requires specs, bounded scope, tests, and review, but keeps production gates lightweight.
-
-### SHIP Mode
-
-For shippable product increments.
-
-SHIP Mode requires production-grade engineering standards before a feature can be closed, including security, data correctness, performance, failure modes, accessibility, observability readiness, tests, and operational constraints.
-
-## Core Lifecycle
+## Estados
 
 ```text
-pending -> spec_ready -> approved -> in_progress -> review -> done
+pending -> spec_ready -> approved -> ready -> running -> review -> done
+                                  \-> blocked
+                                  \-> repair_required
 ```
 
-Additional stop state:
+## Modos
+
+**MVP** mantiene alcance acotado, pruebas, verificación y revisión con gates ligeros.
+
+**SHIP** añade seguridad, integridad de datos, rendimiento, failure modes, accesibilidad, observabilidad y preparación operativa.
+
+## Estructura
 
 ```text
-blocked
-```
-
-## Gate Stack
-
-```text
-MVP  : spec + bounded scope + tests + verification + review
-SHIP : MVP + security + data correctness + performance + failure modes
-       + accessibility + observability readiness + operations
-```
-
-## Repository Structure
-
-```text
-harness-sdlc/
+Graph-harness-sdlc/
   AGENTS.md
   RTK.md
   CLAUDE.md
-  README.md
   feature_list.json
-  init.sh
   .opencode/commands/
   .claude/agents/
   skills/
-  adr/
-  docs/
+  specs/
   templates/
+  docs/
+  adr/
   examples/
   progress/
-  specs/
 ```
 
-## Control System
-
-```text
-agents    = roles
-commands  = operational actions
-skills    = specialized reusable capabilities
-templates = reusable artifact formats
-docs      = policy and methodology
-adr       = why major decisions exist
-examples  = small portable reference shapes
-```
-
-Harness SDLC is not a prompt collection.
-
-It is a reusable control system for shipping software with AI agents.
-
-## First Workflow
-
-The initial feature is `001-harness-bootstrap`.
-
-Current state:
-
-- Feature 1 is specified.
-- Feature 1 is set to `spec_ready`.
-- Implementation has not started.
-- Human approval is required before moving to `approved`.
-
-Run:
+## Flujo inicial
 
 ```sh
 ./init.sh
 ```
 
-## Philosophy
+1. Define o selecciona una feature.
+2. Produce requisitos, diseño y tareas.
+3. Obtén aprobación humana.
+4. Ejecuta únicamente nodos listos.
+5. Adjunta evidencia a cada resultado.
+6. Evalúa gates.
+7. Repara solo el subgrafo afectado.
+8. Cierra cuando los criterios estén demostrados.
 
-AI agents should not be treated as chatbots that randomly edit your repo.
+## Principio rector
 
-They should operate inside a harness.
+No más prompts que intentan contener proceso, memoria, gobierno y estado al mismo tiempo.
 
-The harness defines the context, tools, memory, permissions, workflow, verification gates, and review process that allow agents to contribute to real software delivery.
+```text
+Prompt -> Runtime -> Execution graph -> Executors -> Evidence -> Gates -> Persistent state
+```
 
-One repo. Two modes. Shippable software.
+Una base compacta para entregar software real con autonomía controlada, trazabilidad completa y recuperación precisa.

@@ -126,7 +126,7 @@ Puede inspeccionarse para comprender:
 
 No debe modificarse en este incremento.
 
-### harness-sdlc
+### Graph-harness-sdlc
 
 Es el sistema de control del ciclo de entrega.
 
@@ -194,7 +194,7 @@ Solo después de aprobación explícita y según la spec:
 - corpus originals;
 - electoral reconciliation outputs;
 - LA_muni_RAG;
-- harness-sdlc;
+- Graph-harness-sdlc;
 - legal records;
 - production deployment configuration;
 - secrets;

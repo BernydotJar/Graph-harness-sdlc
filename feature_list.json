@@ -1,5 +1,5 @@
 {
-  "repository": "harness-sdlc",
+  "repository": "Graph-harness-sdlc",
   "tagline": "Spec-driven agentic delivery for shippable software.",
   "allowed_statuses": [
     "pending",
