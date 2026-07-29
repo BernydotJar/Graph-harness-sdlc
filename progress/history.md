@@ -28,3 +28,20 @@
 - The application exercised localized repair: only `INC-038` was invalidated and advanced to revision 1 before all eight jobs passed.
 - User authorized closure and merge; approval SHA-256 `177e06b3b8e83da64c16b2991d25f1e6f36a3b576c7e47f176549317fc5843cc`.
 - Feature `008-executable-graph-runtime` transitioned from `review` to `done`.
+
+## 2026-07-29 — 009 Canonical Multilingual Documentation Approved
+
+- Mode: SHIP.
+- Human approval basis: project owner supplied the canonical English positioning, core principle, lifecycle, objective, terminal states and documentation taxonomy.
+- Approved scope: documentation only; no runtime, schema or event-contract changes.
+
+## 2026-07-29 — 009 Canonical Multilingual Documentation Completed
+
+- Terminal result: `COMPLETED` for the approved documentation scope.
+- English established as canonical documentation language.
+- Spanish, Portuguese and Italian overview translations added.
+- Documentation information architecture added for concepts, runtime architecture, system architecture, tutorials, examples and reference.
+- Program terminal states documented without changing runtime node statuses or schemas.
+- Verification: harness PASS; 6/6 runtime tests PASS; compile PASS; 94/94 relative links PASS; consistency PASS.
+- Review artifact: `progress/review_009-canonical-documentation.md`.
+- Authority boundary: closure does not authorize push, release or deployment.

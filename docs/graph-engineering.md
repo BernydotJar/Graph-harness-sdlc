@@ -1,10 +1,10 @@
 # Graph Engineering
 
-Graph Harness SDLC representa el trabajo como dos grafos relacionados.
+Graph Harness SDLC represents delivery through two related graphs.
 
 ## Product knowledge graph
 
-Contiene entidades persistentes del producto:
+The product knowledge graph contains persistent product entities:
 
 - Requirement
 - Feature
@@ -14,11 +14,11 @@ Contiene entidades persistentes del producto:
 - Decision
 - Risk
 - Test
-- Eval
+- Evaluation
 - Commit
 - Pull Request
 
-Relaciones recomendadas:
+Recommended relationships:
 
 ```text
 DEPENDS_ON
@@ -33,7 +33,7 @@ REPAIRS
 
 ## Execution graph
 
-Contiene unidades operativas:
+The execution graph contains operational units:
 
 - Task
 - Agent
@@ -45,11 +45,11 @@ Contiene unidades operativas:
 - Failure
 - Checkpoint
 
-Un nodo puede ejecutarse cuando sus dependencias están satisfechas, sus locks están libres, sus gates previos han pasado y existe un ejecutor con la capacidad requerida.
+A node may execute when its dependencies are satisfied, its locks are free, its prerequisite gates pass and an executor has the required capability.
 
-## Estado y eventos
+## State and events
 
-La ejecución usa contratos versionados y estado derivado:
+Execution uses versioned contracts and derived state:
 
 ```text
 graph-harness.project.v1 + graph-harness.event.v1 JSONL
@@ -57,20 +57,24 @@ graph-harness.project.v1 + graph-harness.event.v1 JSONL
   -> generated projections
 ```
 
-Cada evento conserva secuencia, actor, revisión de nodo y una cadena SHA-256. La revisión aumenta cuando un fallo invalida el nodo; por ello la evidencia anterior permanece auditable pero deja de satisfacer gates actuales.
+Each event preserves sequence, actor, node revision and a SHA-256 chain. A failed gate increments the revision of affected nodes. Earlier evidence remains auditable but becomes stale for current gates.
 
-Los ledgers, reportes y documentos de progreso son proyecciones; no deben competir como fuentes de verdad independientes.
+Ledgers, reports and progress documents are projections. They must not compete as independent sources of truth.
 
-## Reparación localizada
+## Localized repair
 
-Cuando un gate falla:
+When a gate fails:
 
-1. identifica el nodo y la evidencia defectuosa;
-2. calcula descendientes afectados;
-3. invalida únicamente ese subgrafo;
-4. incrementa la revisión de cada nodo afectado;
-5. registra un plan de reparación;
-6. vuelve a ejecutar los gates necesarios;
-7. conserva intacta la evidencia no afectada.
+1. identify the failed node and defective evidence;
+2. compute affected descendants;
+3. invalidate only that subgraph;
+4. increment the revision of every affected node;
+5. record a repair plan;
+6. rerun only the required work and gates;
+7. preserve unaffected evidence and nodes.
 
-Este modelo reduce reinicios amplios, pérdida de contexto y retrabajo innecesario.
+This model reduces broad restarts, context loss and unnecessary rework.
+
+## Program completion
+
+Node completion is not program completion. The graph reaches a program terminal state only when repository policy evaluates the declared objective, all required nodes, current evidence, blockers and safety boundaries. See [Program terminal states](terminal-states.md).

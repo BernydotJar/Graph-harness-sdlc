@@ -1,16 +1,86 @@
 <div align="center">
 
-<img src="assets/graph-harness-cats.svg" alt="Three cats connected as an executable delivery graph" width="900" />
+<img src="assets/graph-harness-cats.svg" alt="Three cats connected as an executable software delivery graph" width="900" />
 
 # Graph Harness SDLC
 
-**Autonomía estructurada sobre un grafo ejecutable, con estado tipado, evidencia trazable y reparación localizada.**
+**Structured autonomy over an executable software delivery graph.**
+
+[English](README.md) · [Español](README.es.md) · [Português](README.pt.md) · [Italiano](README.it.md)
 
 </div>
 
-`Graph Harness SDLC` es un sistema reutilizable para construir software con agentes de IA sin depender de una conversación monolítica ni de ciclos que pierden contexto. Convierte requisitos, tareas, decisiones, verificaciones y fallos en nodos y relaciones explícitas que pueden ejecutarse, auditarse y repararse.
+Graph Harness SDLC is an execution runtime and engineering methodology for autonomous, long-running software development programs.
 
-## Modelo
+It converts software delivery from a sequence of isolated prompts into a persistent executable graph composed of typed state, explicit dependencies, quality gates, traceable evidence and localized repair.
+
+**English is the canonical documentation language.** Translations are maintained for accessibility, while normative identifiers, schemas and runtime contracts remain in English.
+
+## Core principle
+
+> The execution graph is the source of truth. Agents are interchangeable executors.
+
+A feature is not complete because code exists. It is complete only when its evidence satisfies every required gate and the graph remains in a valid state.
+
+## What Graph Harness SDLC provides
+
+- Executable development graphs
+- Typed execution state
+- Dependency-aware scheduling
+- Persistent checkpoints
+- Producer, critic, fixer and verifier separation
+- Deterministic quality gates
+- Evidence-backed completion
+- Localized repair
+- Human approval gates
+- Resumable long-session execution
+- Explicit terminal states
+
+## Execution lifecycle
+
+```text
+Ready Node
+    ↓
+Producer
+    ↓
+Critic / Red Team
+    ↓
+Fixer
+    ↓
+Independent Verifier
+    ↓
+Release Gate
+    ↓
+Persistent Evidence
+    ↓
+Next Ready Node
+```
+
+The graph governs readiness, permissions, dependencies, evidence freshness and closure. Executors may change between nodes or retries without changing the source of truth.
+
+## Objective
+
+The objective is not to generate activity.
+
+**The objective is to finish the product.**
+
+Execution continues until the repository reaches one of three program terminal states:
+
+- `COMPLETED`
+- `PARTIAL_WITH_DOCUMENTED_BLOCKERS`
+- `SAFETY_STOP`
+
+These are program-level outcomes. They are distinct from node lifecycle statuses such as `done`, `blocked` and `repair_required`. See [Terminal states](docs/terminal-states.md).
+
+## Runtime model
+
+A consuming repository supplies:
+
+- a versioned `graph-harness.project.v1` graph definition;
+- an append-only `graph-harness.event.v1` event ledger;
+- domain adapters that pin a specific revision of this repository.
+
+The runtime derives `graph-harness.state.v1` from those sources and enforces valid transitions, evidence freshness, dependency readiness, gates, checkpoints and localized repair.
 
 ```mermaid
 flowchart LR
@@ -18,27 +88,27 @@ flowchart LR
   S --> A{Human approval}
   A --> T[Task graph]
   T --> E[Executor]
-  E --> V[Verification]
-  V -->|pass| D[Done]
+  E --> X[Evidence]
+  X --> V[Verification]
+  V -->|pass| G[Gate]
   V -->|fail| F[Localized repair]
   F --> T
-  E --> X[Evidence]
-  X --> V
+  G --> N[Next ready node]
 ```
-
-El agente no es el centro de la arquitectura. Es un ejecutor intercambiable dentro de un grafo gobernado por dependencias, capacidades, permisos y gates.
 
 ```text
 Task node -> Capability -> Scheduler -> Executor -> Evidence -> Gate
 ```
 
-## Runtime ejecutable
+The runtime does not grant authority to merge, release, deploy, spend funds, mutate secrets or create external effects. Those decisions remain explicit human or repository-owned gates.
 
-El framework incluye un runtime Python sin dependencias de aplicación. Un repositorio consumidor aporta:
+## Quick start
 
-- un `graph-harness.project.v1` generado desde sus fuentes canónicas;
-- un ledger append-only `graph-harness.event.v1`;
-- adaptadores de dominio que referencian una revisión fijada de este repositorio.
+```sh
+./init.sh
+```
+
+Validate and inspect a consuming graph:
 
 ```sh
 python3 -m graph_harness \
@@ -52,40 +122,17 @@ python3 -m graph_harness \
   status --pretty
 ```
 
-El event store verifica secuencia contigua, identidad de proyecto, revisión de nodo y una cadena SHA-256. La reparación localizada conserva evidencia histórica, incrementa la revisión del nodo afectado e invalida sólo el nodo fuente y sus descendientes.
+## Documentation
 
-El runtime no concede autoridad de merge, release, deployment, gasto, secretos ni efectos externos. Esas decisiones siguen siendo gates humanos y del repositorio consumidor.
+- [Documentation index](docs/README.md)
+- [Concepts](docs/concepts.md)
+- [Runtime architecture](docs/runtime-architecture.md)
+- [System architecture](docs/system-architecture.md)
+- [Tutorials](docs/tutorials.md)
+- [Examples](examples/)
+- [Reference](docs/reference.md)
 
-## Qué incorpora
-
-- Spec-Driven Development
-- Harness Engineering
-- Loop Engineering
-- grafos de ejecución tipados
-- separación de roles y capacidades
-- aprobación humana
-- límites de archivos y permisos
-- evidencia verificable
-- quality gates por modo
-- checkpoints y recuperación
-- reparación localizada del subgrafo afectado
-- decisiones y deuda técnica trazables
-
-## Estados
-
-```text
-pending -> spec_ready -> approved -> ready -> running -> review -> done
-                                  \-> blocked
-                                  \-> repair_required
-```
-
-## Modos
-
-**MVP** mantiene alcance acotado, pruebas, verificación y revisión con gates ligeros.
-
-**SHIP** añade seguridad, integridad de datos, rendimiento, failure modes, accesibilidad, observabilidad y preparación operativa.
-
-## Estructura
+## Repository structure
 
 ```text
 Graph-harness-sdlc/
@@ -93,38 +140,22 @@ Graph-harness-sdlc/
   RTK.md
   CLAUDE.md
   feature_list.json
-  .opencode/commands/
-  .claude/agents/
-  skills/
+  graph_harness/
+  schemas/
   specs/
   templates/
+  skills/
   docs/
-  adr/
   examples/
   progress/
 ```
 
-## Flujo inicial
+## Design position
 
-```sh
-./init.sh
-```
-
-1. Define o selecciona una feature.
-2. Produce requisitos, diseño y tareas.
-3. Obtén aprobación humana.
-4. Ejecuta únicamente nodos listos.
-5. Adjunta evidencia a cada resultado.
-6. Evalúa gates.
-7. Repara solo el subgrafo afectado.
-8. Cierra cuando los criterios estén demostrados.
-
-## Principio rector
-
-No más prompts que intentan contener proceso, memoria, gobierno y estado al mismo tiempo.
+Graph Harness SDLC is not an application and not a prompt collection. It is the reusable execution operating system used by application repositories to deliver software through a governed graph.
 
 ```text
-Prompt -> Runtime -> Execution graph -> Executors -> Evidence -> Gates -> Persistent state
+Intent -> Spec -> Executable graph -> Executors -> Evidence -> Gates -> Persistent state
 ```
 
-Una base compacta para entregar software real con autonomía controlada, trazabilidad completa y recuperación precisa.
+Every framework change should strengthen reusable delivery semantics rather than introduce product-specific assumptions.

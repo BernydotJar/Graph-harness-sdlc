@@ -1,0 +1,11 @@
+test_cycle_is_rejected (test_runtime.RuntimeTests.test_cycle_is_rejected) ... ok
+test_gate_cannot_pass_without_required_evidence_kind (test_runtime.RuntimeTests.test_gate_cannot_pass_without_required_evidence_kind) ... ok
+test_hash_chain_detects_tampering (test_runtime.RuntimeTests.test_hash_chain_detects_tampering) ... ok
+test_localized_repair_invalidates_only_descendants (test_runtime.RuntimeTests.test_localized_repair_invalidates_only_descendants) ... ok
+test_optimistic_append_rejects_stale_writer (test_runtime.RuntimeTests.test_optimistic_append_rejects_stale_writer) ... ok
+test_validated_flow_exposes_ready_dependency (test_runtime.RuntimeTests.test_validated_flow_exposes_ready_dependency) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.028s
+
+OK

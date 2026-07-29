@@ -1,55 +1,77 @@
 # Loop Engineering
 
-Loop Engineering designs the repeatable work loops around the model.
+Loop Engineering designs repeatable work cycles around the execution graph. A loop must consume typed state, produce traceable evidence and end in a validated transition, checkpoint, blocker or safety decision.
 
-The loop is:
+## Primary execution loop
 
 ```text
-input -> context -> decision -> tool action -> verification -> review -> next state
+ready node
+  -> producer
+  -> critic / red team
+  -> fixer
+  -> independent verifier
+  -> release gate
+  -> persistent evidence
+  -> next ready node
 ```
 
-## Spec Loop
+## Specification loop
 
-- read feature registry
-- select one pending feature
-- write requirements/design/tasks
-- validate harness
-- stop for approval
+- read the feature registry and current graph;
+- select an eligible feature;
+- write requirements, design and tasks;
+- define file boundaries and verification;
+- validate the harness;
+- stop for required human approval.
 
-## Implementation Loop
+## Implementation loop
 
-- confirm approved state
-- read approved spec
-- edit only allowed files
-- run verification
-- record evidence
-- move to review
+- confirm approved and ready state;
+- read the approved specification;
+- edit only allowed files;
+- record implementation evidence;
+- checkpoint before long or risky operations;
+- move to critique and verification.
 
-## Review Loop
+## Critic and repair loop
 
-- compare implementation to spec
-- inspect tests and verification
-- write review artifact
-- reject, block, or recommend closure
+- compare the produced artifact against the specification;
+- search for defects, contradictions and missing failure modes;
+- record findings as evidence;
+- repair the smallest affected scope;
+- rerun only invalidated checks.
 
-## Production Hardening Loop
+## Verification loop
 
-- apply SHIP mode gates
-- document risks and operational constraints
-- require fixes before close when production gaps remain
+- verify independently from the producer;
+- confirm evidence belongs to the current node revision;
+- evaluate deterministic gates;
+- reject stale, incomplete or self-asserted evidence;
+- recommend transition only when requirements are demonstrated.
 
-## Blocker Loop
+## Blocker loop
 
-- name the blocker
-- record required human input
-- set `blocked` only when work cannot continue
-- resume from the same feature after clarification
+- name the blocker precisely;
+- record attempted mitigations;
+- identify affected and unaffected nodes;
+- continue other ready nodes when safe;
+- set `blocked` only when the node cannot progress;
+- record exact resume conditions.
 
-## Close Loop
+## Safety loop
 
-- confirm review passed
-- confirm verification passed
-- confirm human closure approval
-- record closure
-- mark `done`
+- stop before crossing an authorization, security, privacy, legal or destructive-operation boundary;
+- preserve the last safe checkpoint;
+- record actions not taken;
+- require the appropriate human authority before resumption.
 
+## Program closure loop
+
+- validate graph and event integrity;
+- compare completed nodes with the declared objective;
+- inspect blockers and safety boundaries;
+- select the correct program terminal state;
+- attach evidence and a final checkpoint;
+- do not describe partial or unsafe work as completed.
+
+See [Program terminal states](terminal-states.md).

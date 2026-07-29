@@ -1,6 +1,6 @@
 {
   "repository": "Graph-harness-sdlc",
-  "tagline": "Spec-driven agentic delivery for shippable software.",
+  "tagline": "Structured autonomy over an executable software delivery graph.",
   "allowed_statuses": [
     "pending",
     "spec_ready",
@@ -69,6 +69,13 @@
       "mode": "SHIP",
       "status": "done",
       "summary": "Provide typed graph execution, append-only evidence, gate enforcement, dependency scheduling, and localized repair for consuming application repositories."
+    },
+    {
+      "id": "009-canonical-documentation",
+      "title": "Canonical multilingual documentation",
+      "mode": "SHIP",
+      "status": "done",
+      "summary": "Establish English as the canonical documentation language, add Spanish, Portuguese and Italian translations, define program terminal states, and provide a coherent documentation information architecture."
     }
   ]
 }

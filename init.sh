@@ -13,6 +13,16 @@ required_files = [
     "RTK.md",
     "CLAUDE.md",
     "README.md",
+    "README.es.md",
+    "README.pt.md",
+    "README.it.md",
+    "docs/README.md",
+    "docs/concepts.md",
+    "docs/runtime-architecture.md",
+    "docs/system-architecture.md",
+    "docs/tutorials.md",
+    "docs/reference.md",
+    "docs/terminal-states.md",
     "feature_list.json",
     "init.sh",
     "docs/methodology.md",
@@ -211,6 +221,31 @@ for skill_file in skill_files:
     text = path.read_text().lower()
     if "checklist" not in text:
         errors.append(f"{skill_file}: missing checklist")
+
+canonical_readme = root / "README.md"
+if canonical_readme.is_file():
+    text = canonical_readme.read_text()
+    for term in [
+        "English is the canonical documentation language",
+        "The execution graph is the source of truth",
+        "COMPLETED",
+        "PARTIAL_WITH_DOCUMENTED_BLOCKERS",
+        "SAFETY_STOP",
+    ]:
+        if term not in text:
+            errors.append(f"README.md: missing canonical term {term}")
+
+for translation in ["README.es.md", "README.pt.md", "README.it.md"]:
+    path = root / translation
+    if path.is_file() and "README.md" not in path.read_text():
+        errors.append(f"{translation}: missing canonical README link")
+
+terminal_states = root / "docs/terminal-states.md"
+if terminal_states.is_file():
+    text = terminal_states.read_text()
+    for state in ["COMPLETED", "PARTIAL_WITH_DOCUMENTED_BLOCKERS", "SAFETY_STOP"]:
+        if state not in text:
+            errors.append(f"docs/terminal-states.md: missing {state}")
 
 quality_gates = root / "docs/quality-gates.md"
 if quality_gates.is_file():

@@ -73,7 +73,7 @@ Checks:
 
 Transition:
 
-- `approved -> in_progress -> review`
+- `approved -> ready -> running -> review`
 
 Required artifact:
 
@@ -81,7 +81,7 @@ Required artifact:
 
 Failure behavior:
 
-- keep feature `in_progress` or set `blocked`
+- keep feature `running` or set `blocked`
 
 ## Review Gate
 
@@ -167,3 +167,7 @@ Failure behavior:
 
 - keep feature `review` or set `blocked`
 
+
+## Program Terminal Outcome
+
+A passing close gate completes a node or feature. The whole program reaches a terminal outcome only after repository policy evaluates the declared objective across the full graph. The permitted outcomes are `COMPLETED`, `PARTIAL_WITH_DOCUMENTED_BLOCKERS` and `SAFETY_STOP`. See [Program terminal states](terminal-states.md).
