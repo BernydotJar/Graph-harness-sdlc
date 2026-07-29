@@ -24,3 +24,15 @@ Run harness validation with:
 Feature specs must define additional verification commands before implementation starts.
 
 Verification results should be recorded in `progress/current.md` or review artifacts when relevant.
+
+
+## Runtime Verification
+
+`./init.sh` also runs:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 -m compileall -q graph_harness
+```
+
+A consuming repository must additionally execute the pinned runtime against its generated project contract and persistent event ledger. A valid JSON parse alone is insufficient: the runtime verifies dependency acyclicity, event hash continuity, node revisions, transition legality, evidence freshness, and gate references.

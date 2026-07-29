@@ -49,11 +49,15 @@ Un nodo puede ejecutarse cuando sus dependencias están satisfechas, sus locks e
 
 ## Estado y eventos
 
-La fuente canónica debe evolucionar hacia eventos append-only y un estado derivado:
+La ejecución usa contratos versionados y estado derivado:
 
 ```text
-events.jsonl -> graph state -> generated projections
+graph-harness.project.v1 + graph-harness.event.v1 JSONL
+  -> graph-harness.state.v1
+  -> generated projections
 ```
+
+Cada evento conserva secuencia, actor, revisión de nodo y una cadena SHA-256. La revisión aumenta cuando un fallo invalida el nodo; por ello la evidencia anterior permanece auditable pero deja de satisfacer gates actuales.
 
 Los ledgers, reportes y documentos de progreso son proyecciones; no deben competir como fuentes de verdad independientes.
 
@@ -64,8 +68,9 @@ Cuando un gate falla:
 1. identifica el nodo y la evidencia defectuosa;
 2. calcula descendientes afectados;
 3. invalida únicamente ese subgrafo;
-4. crea nodos de reparación;
-5. vuelve a ejecutar los gates necesarios;
-6. conserva intacta la evidencia no afectada.
+4. incrementa la revisión de cada nodo afectado;
+5. registra un plan de reparación;
+6. vuelve a ejecutar los gates necesarios;
+7. conserva intacta la evidencia no afectada.
 
 Este modelo reduce reinicios amplios, pérdida de contexto y retrabajo innecesario.

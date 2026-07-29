@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BernydotJar/Graph-harness-sdlc/schemas/event-v1.schema.json",
+  "title": "Graph Harness event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "event_id", "sequence", "occurred_at", "project_id",
+    "event_type", "node_id", "node_revision", "actor", "payload",
+    "previous_event_hash", "event_hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "graph-harness.event.v1"},
+    "event_id": {"type": "string", "format": "uuid"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "project_id": {"type": "string", "minLength": 1},
+    "event_type": {
+      "enum": [
+        "approval.recorded", "evidence.recorded", "gate.evaluated",
+        "node.transitioned", "failure.recorded", "node.invalidated",
+        "repair.plan_created", "checkpoint.recorded"
+      ]
+    },
+    "node_id": {"type": ["string", "null"]},
+    "node_revision": {"type": ["integer", "null"], "minimum": 0},
+    "actor": {"type": "string", "minLength": 1},
+    "payload": {"type": "object"},
+    "previous_event_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "event_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

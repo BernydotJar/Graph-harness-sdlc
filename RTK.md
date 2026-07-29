@@ -18,7 +18,9 @@ Do not implement app code until a feature is specified, reviewed, and explicitly
 
 Features move through this lifecycle:
 
-`pending -> spec_ready -> approved -> in_progress -> review -> done`
+`pending -> spec_ready -> approved -> ready -> running -> review -> done`
+
+Failure recovery uses `repair_required`; terminal replacement uses `superseded`.
 
 Additional stop state:
 
@@ -29,16 +31,21 @@ Allowed statuses are:
 - `pending`
 - `spec_ready`
 - `approved`
-- `in_progress`
+- `ready`
+- `running`
 - `review`
 - `done`
 - `blocked`
+- `repair_required`
+- `superseded`
 
 At most one feature may be active at a time across:
 
 - `approved`
-- `in_progress`
+- `ready`
+- `running`
 - `review`
+- `repair_required`
 
 ## Modes
 
@@ -108,6 +115,18 @@ Production Reviewer:
 - Used in SHIP mode.
 - Validates production-readiness gates.
 - Can reject a feature even if tests pass.
+
+## Executable Runtime
+
+The reusable runtime is the `graph_harness` Python package. Consuming repositories provide a versioned `graph-harness.project.v1` document and an append-only `graph-harness.event.v1` JSONL store.
+
+The runtime owns typed transitions, dependency readiness, evidence freshness, gate evaluation, checkpoints, and localized repair. Application repositories own their requirements, task ledgers, domain evidence, and adapters into the framework contract. They must pin the framework revision rather than copy runtime modules.
+
+Source execution requires Python 3.11+ and no third-party dependency:
+
+```bash
+python3 -m graph_harness --project <project.json> --events <events.jsonl> validate
+```
 
 ## Context7 Policy
 

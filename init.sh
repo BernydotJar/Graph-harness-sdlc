@@ -68,6 +68,19 @@ required_files = [
     "examples/progress-example/history.md",
     "progress/current.md",
     "progress/history.md",
+    "pyproject.toml",
+    "graph_harness/__init__.py",
+    "graph_harness/__main__.py",
+    "graph_harness/cli.py",
+    "graph_harness/model.py",
+    "graph_harness/runtime.py",
+    "graph_harness/store.py",
+    "schemas/project-v1.schema.json",
+    "schemas/event-v1.schema.json",
+    "tests/test_runtime.py",
+    "specs/008-executable-graph-runtime/requirements.md",
+    "specs/008-executable-graph-runtime/design.md",
+    "specs/008-executable-graph-runtime/tasks.md",
 ]
 
 command_files = [
@@ -124,7 +137,18 @@ except Exception as exc:
     data = {}
 
 allowed = set(data.get("allowed_statuses", []))
-expected = {"pending", "spec_ready", "approved", "in_progress", "review", "done", "blocked"}
+expected = {
+    "pending",
+    "spec_ready",
+    "approved",
+    "ready",
+    "running",
+    "review",
+    "done",
+    "blocked",
+    "repair_required",
+    "superseded",
+}
 if allowed != expected:
     errors.append(f"allowed_statuses must be exactly {sorted(expected)}")
 
@@ -132,12 +156,20 @@ features = data.get("features", [])
 if not isinstance(features, list) or not features:
     errors.append("feature_list.json must contain a non-empty features array")
 
-active_statuses = {"approved", "in_progress", "review"}
+active_statuses = {"approved", "ready", "running", "review", "repair_required"}
 active = [f.get("id") for f in features if f.get("status") in active_statuses]
 if len(active) > 1:
     errors.append(f"at most one active feature is allowed, found: {active}")
 
-spec_required_statuses = {"spec_ready", "approved", "in_progress", "review", "done"}
+spec_required_statuses = {
+    "spec_ready",
+    "approved",
+    "ready",
+    "running",
+    "review",
+    "done",
+    "repair_required",
+}
 for feature in features:
     feature_id = feature.get("id")
     status = feature.get("status")
@@ -148,6 +180,10 @@ for feature in features:
             path = root / "specs" / str(feature_id) / spec_file
             if not path.is_file():
                 errors.append(f"{feature_id}: missing spec file {path}")
+    if status in {"review", "done"}:
+        review_path = root / "progress" / f"review_{feature_id}.md"
+        if not review_path.is_file():
+            errors.append(f"{feature_id}: missing review artifact {review_path}")
 
 for command_file in command_files:
     path = root / command_file
@@ -199,3 +235,6 @@ print("Harness validation passed.")
 print(f"Features: {len(features)}")
 print(f"Active features: {len(active)}")
 PY
+
+python3 -m unittest discover -s tests -v
+python3 -m compileall -q graph_harness

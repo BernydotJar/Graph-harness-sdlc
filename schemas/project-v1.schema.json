@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BernydotJar/Graph-harness-sdlc/schemas/project-v1.schema.json",
+  "title": "Graph Harness project v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "mode", "gate_definitions", "nodes"],
+  "properties": {
+    "schema_version": {"const": "graph-harness.project.v1"},
+    "project_id": {"type": "string", "minLength": 1},
+    "mode": {"enum": ["MVP", "SHIP"]},
+    "gate_definitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "required_evidence_kinds", "blocking"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "required_evidence_kinds": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          },
+          "blocking": {"type": "boolean"}
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "title", "status", "depends_on", "capability", "gates", "allowed_paths"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "status": {
+            "enum": [
+              "pending", "spec_ready", "approved", "ready", "running", "review",
+              "done", "blocked", "repair_required", "superseded"
+            ]
+          },
+          "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "capability": {"type": "string", "minLength": 1},
+          "gates": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            }
+          },
+          "allowed_paths": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "metadata": {"type": "object"}
+        }
+      }
+    }
+  }
+}
