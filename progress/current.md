@@ -2,32 +2,19 @@
 
 ## Active Feature
 
-`008-executable-graph-runtime` — `review` — SHIP mode.
+None.
 
-## Approval
+## Completed Feature
 
-The user explicitly directed adoption of Graph Harness SDLC as the execution runtime for `AI-Native-Content-Agency-SaaS` and required executable graph execution, typed state, dependency scheduling, production gates, persistent evidence, localized repair, and valid graph state for completed features.
+`008-executable-graph-runtime` — `done` — SHIP mode.
 
-Normalized directive SHA-256:
+## Closure Evidence
 
-```text
-992ba3453c36d0d09aea7af7ea89d5f84da5b63d998342c7631e4a94a797e142
-```
-
-The approval is bounded to framework runtime and application adapter work. Merge, release, deployment, external infrastructure, spending, secret mutation, and external effects remain human-gated.
-
-## Implemented Runtime
-
-- `graph-harness.project.v1` typed project contract.
-- `graph-harness.event.v1` append-only JSONL contract.
-- contiguous event sequencing and SHA-256 hash-chain verification.
-- exclusive-lock append and expected-last-event optimistic concurrency.
-- typed node lifecycle and legal transition enforcement.
-- dependency readiness and capability metadata.
-- revision-scoped evidence and gate evaluation.
-- localized descendant repair with preserved unaffected evidence.
-- project checkpoints and machine-readable state projection.
-- source and installed-wheel CLI entrypoints.
+- Canonical runtime commit consumed by the application: `a10ed02c1afe95b0e39a0d0e3662c209fa4033cb`.
+- Application exact head: `655df8b0317482001a5dbe7a4483411318f14dfd`.
+- Application production-readiness run: `30428010235`, 8/8 jobs successful.
+- Cross-repository project projection, event ledger, derived state, localized repair, and exact-head recovery were exercised.
+- Human closure authorization SHA-256: `177e06b3b8e83da64c16b2991d25f1e6f36a3b576c7e47f176549317fc5843cc`.
 
 ## Verification
 
@@ -36,17 +23,10 @@ The approval is bounded to framework runtime and application adapter work. Merge
 unit tests: 6/6 PASS
 compileall: PASS
 source CLI: PASS
-wheel build: PASS
-isolated wheel install: PASS
-installed CLI/import: PASS
-wheel SHA-256: a8ddf7fadeed0a68d30a5f30f08ddc561a5d2e3edbf88c1b6a9f4db61617f9fd
-git diff --check: PASS
+wheel build/install/import: PASS
+application exact-head integration: PASS
 ```
 
-## Current Gate
+## Authority Boundary
 
-Framework implementation is ready for dependent application adoption and independent review. It is intentionally not marked `done`; close approval and merge remain human gates.
-
-## Next Action
-
-Pin this framework revision from `AI-Native-Content-Agency-SaaS`, generate its project contract from existing canonical program ledgers, persist Graph Harness events, run both framework and application gates, and open draft pull requests.
+This closes the framework development increment and authorizes its merge. It does not authorize release, deployment, spending, secret mutation, or external effects.

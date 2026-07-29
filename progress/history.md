@@ -21,3 +21,10 @@
 - Added versioned JSON schemas and six fail-closed unit tests.
 - Built and installed wheel `graph_harness_sdlc-0.1.0-py3-none-any.whl`; SHA-256 `a8ddf7fadeed0a68d30a5f30f08ddc561a5d2e3edbf88c1b6a9f4db61617f9fd`.
 - Set feature to `review`; application adoption, exact-head CI, human close, and merge remain pending.
+
+## 2026-07-29 — 008 closure
+
+- Cross-repository application adoption passed exact-head run `30428010235` at `655df8b0317482001a5dbe7a4483411318f14dfd`.
+- The application exercised localized repair: only `INC-038` was invalidated and advanced to revision 1 before all eight jobs passed.
+- User authorized closure and merge; approval SHA-256 `177e06b3b8e83da64c16b2991d25f1e6f36a3b576c7e47f176549317fc5843cc`.
+- Feature `008-executable-graph-runtime` transitioned from `review` to `done`.

@@ -2,9 +2,9 @@
 
 ## Decision
 
-`PASS_WITH_DEPENDENT_ADOPTION_PENDING`
+`PASS`
 
-The framework runtime satisfies its bounded implementation contract and is suitable for pinned consumption by an application repository. The feature remains in `review` until application adoption proves the cross-repository contract and a human authorizes closure.
+The framework runtime satisfies its bounded implementation contract. Cross-repository adoption was proven by `AI-Native-Content-Agency-SaaS` exact head `655df8b0317482001a5dbe7a4483411318f14dfd`; production-readiness run `30428010235` passed all eight jobs. The user explicitly authorized closing development with Graph Harness SDLC.
 
 ## Requirements Review
 
@@ -53,15 +53,17 @@ a8ddf7fadeed0a68d30a5f30f08ddc561a5d2e3edbf88c1b6a9f4db61617f9fd
 
 ## Residual Risks
 
-- Cross-repository consumption has not yet been proven on the application branch.
 - File locking assumes a POSIX environment; Windows support is not claimed.
 - The JSON schemas document contracts, while runtime validation remains the authoritative executable gate.
 - Multi-event repair is durable event-by-event rather than a database transaction; partial execution remains detectable and resumable through the event chain.
 
-## Required Before Done
+## Closure Evidence
 
-1. Pin the framework commit in `AI-Native-Content-Agency-SaaS` without copying runtime modules.
-2. Generate the application project contract from existing canonical ledgers.
-3. Validate the application event ledger and graph state.
-4. Pass the application production-readiness workflow at the exact head.
-5. Obtain human close and merge approval.
+1. Framework revision pinned without runtime duplication: PASS.
+2. Application project generated from canonical ledgers: PASS.
+3. Application event chain and derived graph state validated: PASS.
+4. Exact-head production-readiness workflow `30428010235`: 8/8 PASS.
+5. Human close and merge authorization: PASS.
+6. Authorization SHA-256: `177e06b3b8e83da64c16b2991d25f1e6f36a3b576c7e47f176549317fc5843cc`.
+
+Feature status: `done`. Release, deployment, spending, secrets, and external effects are not authorized by this closure.
