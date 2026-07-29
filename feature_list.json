@@ -5,10 +5,13 @@
     "pending",
     "spec_ready",
     "approved",
-    "in_progress",
+    "ready",
+    "running",
     "review",
     "done",
-    "blocked"
+    "blocked",
+    "repair_required",
+    "superseded"
   ],
   "features": [
     {
@@ -59,6 +62,13 @@
       "mode": "SHIP",
       "status": "pending",
       "summary": "Package the harness so it can be reused as a clean starter for future application repos."
+    },
+    {
+      "id": "008-executable-graph-runtime",
+      "title": "Executable graph runtime",
+      "mode": "SHIP",
+      "status": "review",
+      "summary": "Provide typed graph execution, append-only evidence, gate enforcement, dependency scheduling, and localized repair for consuming application repositories."
     }
   ]
 }

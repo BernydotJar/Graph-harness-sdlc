@@ -32,6 +32,30 @@ El agente no es el centro de la arquitectura. Es un ejecutor intercambiable dent
 Task node -> Capability -> Scheduler -> Executor -> Evidence -> Gate
 ```
 
+## Runtime ejecutable
+
+El framework incluye un runtime Python sin dependencias de aplicación. Un repositorio consumidor aporta:
+
+- un `graph-harness.project.v1` generado desde sus fuentes canónicas;
+- un ledger append-only `graph-harness.event.v1`;
+- adaptadores de dominio que referencian una revisión fijada de este repositorio.
+
+```sh
+python3 -m graph_harness \
+  --project graph-harness.project.json \
+  --events graph-harness.events.jsonl \
+  validate
+
+python3 -m graph_harness \
+  --project graph-harness.project.json \
+  --events graph-harness.events.jsonl \
+  status --pretty
+```
+
+El event store verifica secuencia contigua, identidad de proyecto, revisión de nodo y una cadena SHA-256. La reparación localizada conserva evidencia histórica, incrementa la revisión del nodo afectado e invalida sólo el nodo fuente y sus descendientes.
+
+El runtime no concede autoridad de merge, release, deployment, gasto, secretos ni efectos externos. Esas decisiones siguen siendo gates humanos y del repositorio consumidor.
+
 ## Qué incorpora
 
 - Spec-Driven Development

@@ -11,3 +11,13 @@
 - Created first SDD spec.
 - Set status to `spec_ready`.
 - Stopped for human approval.
+
+## 008-executable-graph-runtime
+
+- User directive approved bounded framework runtime and application-adapter work; normalized directive SHA-256 `992ba3453c36d0d09aea7af7ea89d5f84da5b63d998342c7631e4a94a797e142`.
+- Added a dependency-free Python runtime with typed project, event, node, gate, and derived-state contracts.
+- Added append-only JSONL persistence with sequence, POSIX locking, optimistic concurrency, fsync, and SHA-256 hash chaining.
+- Added dependency readiness, explicit approval, lifecycle transition enforcement, evidence freshness, gate evaluation, checkpoints, and localized repair.
+- Added versioned JSON schemas and six fail-closed unit tests.
+- Built and installed wheel `graph_harness_sdlc-0.1.0-py3-none-any.whl`; SHA-256 `a8ddf7fadeed0a68d30a5f30f08ddc561a5d2e3edbf88c1b6a9f4db61617f9fd`.
+- Set feature to `review`; application adoption, exact-head CI, human close, and merge remain pending.

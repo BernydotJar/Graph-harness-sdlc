@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=75", "wheel>=0.45"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graph-harness-sdlc"
+version = "0.1.0"
+description = "Executable graph runtime for spec-driven agentic software delivery"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Graph Harness SDLC contributors" }]
+dependencies = []
+
+[project.scripts]
+graph-harness = "graph_harness.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["graph_harness*"]
