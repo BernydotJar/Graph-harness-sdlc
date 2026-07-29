@@ -4,13 +4,19 @@
 
 # Graph Harness SDLC
 
-**Autonomía estructurada sobre un grafo ejecutable, con estado tipado, evidencia trazable y reparación localizada.**
+**Structured autonomy over an executable graph, with typed state, traceable evidence, and localized repair.**
+
+[Español](docs/i18n/README.es.md) · [Português](docs/i18n/README.pt.md) · [Italiano](docs/i18n/README.it.md)
 
 </div>
 
-`Graph Harness SDLC` es un sistema reutilizable para construir software con agentes de IA sin depender de una conversación monolítica ni de ciclos que pierden contexto. Convierte requisitos, tareas, decisiones, verificaciones y fallos en nodos y relaciones explícitas que pueden ejecutarse, auditarse y repararse.
+> English is the canonical documentation language. Community translations may lag behind the canonical version.
 
-## Modelo
+`Graph Harness SDLC` is a reusable execution runtime and engineering methodology for building software with AI agents without depending on a monolithic conversation or context-losing loops. It turns requirements, tasks, decisions, verification results, and failures into explicit nodes and relationships that can be executed, audited, resumed, and repaired.
+
+The objective is not to generate activity. The objective is to finish the product.
+
+## Core model
 
 ```mermaid
 flowchart LR
@@ -26,19 +32,19 @@ flowchart LR
   X --> V
 ```
 
-El agente no es el centro de la arquitectura. Es un ejecutor intercambiable dentro de un grafo gobernado por dependencias, capacidades, permisos y gates.
+The agent is not the center of the architecture. It is an interchangeable executor operating inside a graph governed by dependencies, capabilities, permissions, and gates.
 
 ```text
 Task node -> Capability -> Scheduler -> Executor -> Evidence -> Gate
 ```
 
-## Runtime ejecutable
+## Executable runtime
 
-El framework incluye un runtime Python sin dependencias de aplicación. Un repositorio consumidor aporta:
+The framework includes an application-independent Python runtime. A consuming repository provides:
 
-- un `graph-harness.project.v1` generado desde sus fuentes canónicas;
-- un ledger append-only `graph-harness.event.v1`;
-- adaptadores de dominio que referencian una revisión fijada de este repositorio.
+- a `graph-harness.project.v1` generated from its canonical sources;
+- an append-only `graph-harness.event.v1` ledger;
+- domain adapters that reference a pinned revision of this repository.
 
 ```sh
 python3 -m graph_harness \
@@ -52,26 +58,45 @@ python3 -m graph_harness \
   status --pretty
 ```
 
-El event store verifica secuencia contigua, identidad de proyecto, revisión de nodo y una cadena SHA-256. La reparación localizada conserva evidencia histórica, incrementa la revisión del nodo afectado e invalida sólo el nodo fuente y sus descendientes.
+The event store verifies contiguous sequence, project identity, node revision, and a SHA-256 chain. Localized repair preserves historical evidence, increments the affected node revision, and invalidates only the source node and its descendants.
 
-El runtime no concede autoridad de merge, release, deployment, gasto, secretos ni efectos externos. Esas decisiones siguen siendo gates humanos y del repositorio consumidor.
+The runtime does not grant authority to merge, release, deploy, spend money, access secrets, or produce external effects. Those decisions remain human and repository-specific gates.
 
-## Qué incorpora
+## What it provides
 
 - Spec-Driven Development
 - Harness Engineering
 - Loop Engineering
-- grafos de ejecución tipados
-- separación de roles y capacidades
-- aprobación humana
-- límites de archivos y permisos
-- evidencia verificable
-- quality gates por modo
-- checkpoints y recuperación
-- reparación localizada del subgrafo afectado
-- decisiones y deuda técnica trazables
+- Typed execution graphs
+- Typed execution state
+- Dependency-aware scheduling
+- Separation of roles and capabilities
+- Human approval gates
+- File and permission boundaries
+- Verifiable evidence
+- Deterministic quality gates by operating mode
+- Persistent checkpoints and recovery
+- Localized repair of the affected subgraph
+- Traceable decisions and technical debt
+- Resumable long-session execution
+- Explicit terminal states
 
-## Estados
+## Execution lifecycle
+
+```text
+Ready node
+    -> Producer
+    -> Critic / Red Team
+    -> Fixer
+    -> Independent Verifier
+    -> Release Gate
+    -> Persistent Evidence
+    -> Next Ready Node
+```
+
+A feature is not complete because code exists. It is complete only when its evidence satisfies every required gate and the graph remains in a valid state.
+
+## States
 
 ```text
 pending -> spec_ready -> approved -> ready -> running -> review -> done
@@ -79,13 +104,23 @@ pending -> spec_ready -> approved -> ready -> running -> review -> done
                                   \-> repair_required
 ```
 
-## Modos
+## Operating modes
 
-**MVP** mantiene alcance acotado, pruebas, verificación y revisión con gates ligeros.
+**MVP** keeps scope constrained while preserving tests, verification, review, and lightweight gates.
 
-**SHIP** añade seguridad, integridad de datos, rendimiento, failure modes, accesibilidad, observabilidad y preparación operativa.
+**SHIP** adds security, data integrity, performance, failure modes, accessibility, observability, and operational readiness.
 
-## Estructura
+## Completion semantics
+
+Execution continues until the repository reaches one of these terminal states:
+
+- `COMPLETED` — no useful, safe, unlocked, and verifiable engineering work remains.
+- `PARTIAL_WITH_DOCUMENTED_BLOCKERS` — all remaining work depends exclusively on documented external blockers, human approval, unavailable infrastructure, unavailable credentials, or explicit product decisions.
+- `SAFETY_STOP` — continuing would violate safety, security, integrity, or human-gated constraints.
+
+Do not stop after analysis, planning, scaffolding, one feature, one issue, one commit, one pull request, or one milestone. Continue selecting the highest-priority `READY` node until a valid terminal state is reached.
+
+## Repository structure
 
 ```text
 Graph-harness-sdlc/
@@ -99,32 +134,33 @@ Graph-harness-sdlc/
   specs/
   templates/
   docs/
+    i18n/
   adr/
   examples/
   progress/
 ```
 
-## Flujo inicial
+## Initial workflow
 
 ```sh
 ./init.sh
 ```
 
-1. Define o selecciona una feature.
-2. Produce requisitos, diseño y tareas.
-3. Obtén aprobación humana.
-4. Ejecuta únicamente nodos listos.
-5. Adjunta evidencia a cada resultado.
-6. Evalúa gates.
-7. Repara solo el subgrafo afectado.
-8. Cierra cuando los criterios estén demostrados.
+1. Define or select a feature.
+2. Produce requirements, design, and tasks.
+3. Obtain human approval where required.
+4. Execute only ready nodes.
+5. Attach evidence to every result.
+6. Evaluate the applicable gates.
+7. Repair only the affected subgraph.
+8. Continue until the product reaches a valid terminal state.
 
-## Principio rector
+## Guiding principle
 
-No más prompts que intentan contener proceso, memoria, gobierno y estado al mismo tiempo.
+No more prompts that attempt to contain process, memory, governance, and state at the same time.
 
 ```text
 Prompt -> Runtime -> Execution graph -> Executors -> Evidence -> Gates -> Persistent state
 ```
 
-Una base compacta para entregar software real con autonomía controlada, trazabilidad completa y recuperación precisa.
+A compact foundation for delivering real software with controlled autonomy, complete traceability, and precise recovery.
