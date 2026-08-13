@@ -6,27 +6,29 @@ None.
 
 ## Completed Feature
 
-`008-executable-graph-runtime` — `done` — SHIP mode.
+`009-browser-cdp-capability` — `done` — SHIP mode.
 
 ## Closure Evidence
 
-- Canonical runtime commit consumed by the application: `a10ed02c1afe95b0e39a0d0e3662c209fa4033cb`.
-- Application exact head: `655df8b0317482001a5dbe7a4483411318f14dfd`.
-- Application production-readiness run: `30428010235`, 8/8 jobs successful.
-- Cross-repository project projection, event ledger, derived state, localized repair, and exact-head recovery were exercised.
-- Human closure authorization SHA-256: `177e06b3b8e83da64c16b2991d25f1e6f36a3b576c7e47f176549317fc5843cc`.
+- Reusable `browser_cdp` adapter implemented without project/event schema changes.
+- Typed fail-closed discovery/target/session errors.
+- Deterministic exact/regex page selection with ambiguity rejection.
+- Docker/proxy bridge support through `host_header` and `websocket_base_url`.
+- Evidence sanitizer strips URL query/fragment/user-info and omits sensitive field classes.
+- Base package remains dependency-free; websocket execution is an optional package extra.
+- Live Chrome 151 / CDP 1.3 execution against Google AI Studio passed.
 
 ## Verification
 
 ```text
 ./init.sh: PASS
-unit tests: 6/6 PASS
+unit tests: 15/15 PASS
 compileall: PASS
-source CLI: PASS
 wheel build/install/import: PASS
-application exact-head integration: PASS
+optional websocket extra: PASS
+live Chrome CDP preflight/evaluate: PASS
 ```
 
 ## Authority Boundary
 
-This closes the framework development increment and authorizes its merge. It does not authorize release, deployment, spending, secret mutation, or external effects.
+The capability can operate an intentionally opened browser target, but browser access does not replace human/release gates and session state is not graph state.

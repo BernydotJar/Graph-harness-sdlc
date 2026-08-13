@@ -69,6 +69,13 @@
       "mode": "SHIP",
       "status": "done",
       "summary": "Provide typed graph execution, append-only evidence, gate enforcement, dependency scheduling, and localized repair for consuming application repositories."
+    },
+    {
+      "id": "009-browser-cdp-capability",
+      "title": "Reusable browser CDP capability",
+      "mode": "SHIP",
+      "status": "done",
+      "summary": "Add fail-closed Chrome DevTools Protocol discovery, deterministic page selection, controlled execution, and sanitized evidence for browser-backed workflows."
     }
   ]
 }
