@@ -164,3 +164,7 @@ Prompt -> Runtime -> Execution graph -> Executors -> Evidence -> Gates -> Persis
 ```
 
 A compact foundation for delivering real software with controlled autonomy, complete traceability, and precise recovery.
+
+## Browser CDP capability
+
+`graph_harness.browser_cdp` adds fail-closed Chrome DevTools discovery, deterministic page selection, bounded protocol execution, bridge-aware websocket routing, and sanitized evidence. Projects can declare `capability: "browser_cdp"` without changing the graph schema. The base install remains dependency-free; websocket execution is available through the optional `browser-cdp` package extra.

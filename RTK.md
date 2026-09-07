@@ -211,3 +211,8 @@ Allowed by default:
 - `python3` is available for validation.
 - The repository may be reused in projects with different language stacks.
 - No custom harness runtime, dashboard, or database is required.
+
+
+## Browser CDP Capability
+
+Use `graph_harness.browser_cdp` only for features that explicitly require an already-open Chrome target. Preflight the endpoint, resolve exactly one `type=page`, use bounded timeouts, and record only sanitized target/action/result evidence. Browser session state is not graph state, and UI access does not replace existing human or release gates.
