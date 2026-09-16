@@ -69,6 +69,13 @@
       "mode": "SHIP",
       "status": "done",
       "summary": "Provide typed graph execution, append-only evidence, gate enforcement, dependency scheduling, and localized repair for consuming application repositories."
+    },
+    {
+      "id": "009-control-plane-extensions",
+      "title": "Foundation-inspired control-plane extensions",
+      "mode": "SHIP",
+      "status": "done",
+      "summary": "Add hierarchical policy, tool interception, provider projections, generic preflight/bootstrap, drift doctor, developer profiles, skill lifecycle, and local attribution without coupling the execution kernel to any vendor or RPA platform."
     }
   ]
 }

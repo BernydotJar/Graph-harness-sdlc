@@ -128,6 +128,28 @@ Source execution requires Python 3.11+ and no third-party dependency:
 python3 -m graph_harness --project <project.json> --events <events.jsonl> validate
 ```
 
+## Control-Plane Boundaries
+
+`graph_harness.model`, `graph_harness.store`, and `graph_harness.runtime` are the execution kernel. They must remain provider- and vendor-neutral.
+
+The following are peripheral control-plane modules and must not become reverse dependencies of the kernel:
+
+- `graph_harness.policy` — hierarchical policy and pre-action enforcement;
+- `graph_harness.providers` — coding-agent instruction projections;
+- `graph_harness.bootstrap` — identity/environment preflight and non-destructive bootstrap;
+- `graph_harness.doctor` — read-only drift detection;
+- `graph_harness.profiles` — developer preferences only;
+- `graph_harness.skills` — stable/experimental capability registry;
+- `graph_harness.telemetry` — local attribution metadata with no transport by default.
+
+Policy safety is monotonic: narrower scopes may add restrictions and may never remove inherited restrictions. Developer profiles are weaker than policy and may not contain safety, permission, approval-bypass, credential, token, password, or secret fields.
+
+`bootstrap` and `provider-render` are dry-run by default and require `--apply` for writes. `doctor`, `preflight`, `policy-resolve`, `check-action`, `skills`, and `attribution` do not perform the evaluated external action.
+
+UiPath, RPA platforms, workflow engines, cloud services, databases, frameworks, and other product technologies are optional skills or consuming-repository integrations. None is a mandatory architectural layer of Graph Harness SDLC. Use deterministic workflows where stable rules and transactional behavior make them the better executor; use AI where semantic reasoning and adaptation are required.
+
+See `docs/control-plane.md` and `docs/deterministic-workflows.md`.
+
 ## Context7 Policy
 
 Use Context7 or current documentation checkpoints for external framework/API work such as:
@@ -155,6 +177,15 @@ Run `./init.sh` after harness structure changes.
 
 For application features, specs must define verification commands before implementation begins.
 
+Control-plane changes must additionally verify:
+
+- existing runtime tests remain green;
+- dry-run commands make no writes;
+- policy inheritance cannot weaken safety;
+- provider projections are explicit-target only;
+- doctor reports drift without repairing it;
+- skill registry and attribution contracts validate without external dependencies.
+
 ## Supported Agent Tools
 
 The harness is designed to be portable across agent tools that can read files, edit files, run local commands, and respect command contracts.
@@ -165,6 +196,7 @@ Supported patterns:
 - OpenCode commands under `.opencode/commands/`
 - Codex-style repository instructions through `AGENTS.md`
 - generic reusable skills under `skills/`
+- optional generated instruction projections for Claude, Codex, and Gemini through `graph_harness.providers`
 
 ## Command Conventions
 
@@ -193,6 +225,7 @@ Allowed by default:
 - read-only file inspection commands
 - targeted search commands
 - project-specific verification commands listed in an approved spec
+- read-only Graph Harness control-plane commands such as `preflight`, `doctor`, `policy-resolve`, `skills`, and `attribution`
 
 ## Forbidden Without Explicit Approval
 
@@ -204,10 +237,12 @@ Allowed by default:
 - commands that expose secrets
 - deployment or release commands
 - network calls not required by an approved docs checkpoint
+- `bootstrap --apply` or `provider-render --apply` against a target outside the approved work boundary
 
 ## Environment Assumptions
 
 - `bash` is available for `init.sh`.
 - `python3` is available for validation.
 - The repository may be reused in projects with different language stacks.
-- No custom harness runtime, dashboard, or database is required.
+- No custom harness dashboard or database is required.
+- The execution kernel and control plane require no third-party Python dependency.

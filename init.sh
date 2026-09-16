@@ -32,6 +32,8 @@ required_files = [
     "docs/specs.md",
     "docs/verification.md",
     "docs/conventions.md",
+    "docs/control-plane.md",
+    "docs/deterministic-workflows.md",
     "templates/feature/requirements.md",
     "templates/feature/design.md",
     "templates/feature/tasks.md",
@@ -75,12 +77,35 @@ required_files = [
     "graph_harness/model.py",
     "graph_harness/runtime.py",
     "graph_harness/store.py",
+    "graph_harness/validation.py",
+    "graph_harness/doctor.py",
+    "graph_harness/profiles.py",
+    "graph_harness/skills.py",
+    "graph_harness/telemetry.py",
+    "graph_harness/policy/__init__.py",
+    "graph_harness/policy/model.py",
+    "graph_harness/policy/resolver.py",
+    "graph_harness/policy/enforcement.py",
+    "graph_harness/providers/__init__.py",
+    "graph_harness/providers/base.py",
+    "graph_harness/providers/builtins.py",
+    "graph_harness/bootstrap/__init__.py",
+    "graph_harness/bootstrap/preflight.py",
+    "graph_harness/bootstrap/scaffold.py",
     "schemas/project-v1.schema.json",
     "schemas/event-v1.schema.json",
     "tests/test_runtime.py",
+    "tests/test_policy.py",
+    "tests/test_bootstrap.py",
+    "tests/test_control_plane.py",
+    "tests/test_cli.py",
+    "skills/registry.json",
     "specs/008-executable-graph-runtime/requirements.md",
     "specs/008-executable-graph-runtime/design.md",
     "specs/008-executable-graph-runtime/tasks.md",
+    "specs/009-control-plane-extensions/requirements.md",
+    "specs/009-control-plane-extensions/design.md",
+    "specs/009-control-plane-extensions/tasks.md",
 ]
 
 command_files = [
@@ -211,6 +236,12 @@ for skill_file in skill_files:
     text = path.read_text().lower()
     if "checklist" not in text:
         errors.append(f"{skill_file}: missing checklist")
+
+try:
+    from graph_harness.skills import SkillRegistry
+    SkillRegistry.from_path(root / "skills/registry.json")
+except Exception as exc:
+    errors.append(f"skills/registry.json validation failed: {exc}")
 
 quality_gates = root / "docs/quality-gates.md"
 if quality_gates.is_file():
