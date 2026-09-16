@@ -1,4 +1,4 @@
-"""Executable graph runtime for Graph Harness SDLC."""
+"""Executable graph runtime and control plane for Graph Harness SDLC."""
 
 from .model import (
     EventType,
@@ -20,4 +20,4 @@ __all__ = [
     "ValidationError",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

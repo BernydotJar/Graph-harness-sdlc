@@ -62,6 +62,37 @@ The event store verifies contiguous sequence, project identity, node revision, a
 
 The runtime does not grant authority to merge, release, deploy, spend money, access secrets, or produce external effects. Those decisions remain human and repository-specific gates.
 
+## Context and control-plane extensions
+
+The execution kernel stays deliberately small. Organization context, developer preferences, provider projections, bootstrap checks, and tool-policy interception live in separate modules around it rather than inside `runtime.py`.
+
+```text
+Context / organization plane
+  -> policy hierarchy
+  -> developer profiles
+  -> provider projections
+  -> bootstrap / preflight
+  -> skill lifecycle
+  -> attribution metadata
+          |
+          v
+Graph execution plane
+  -> typed state -> evidence -> gates -> localized repair
+```
+
+Useful commands include:
+
+```sh
+python3 -m graph_harness preflight --root . --pretty
+python3 -m graph_harness bootstrap --root . --dry-run --pretty
+python3 -m graph_harness doctor --root . --pretty
+python3 -m graph_harness skills --registry skills/registry.json --pretty
+```
+
+Built-in coding-agent instruction projections currently target Claude, Codex, and Gemini. Product technologies and deterministic workflow engines are optional skills/adapters, not Graph Harness runtime dependencies. A project may be entirely AI/application-code based and use none of them.
+
+See [Control Plane Extensions](docs/control-plane.md) and [Deterministic Workflows Are Optional Capabilities](docs/deterministic-workflows.md).
+
 ## What it provides
 
 - Spec-Driven Development
@@ -80,6 +111,14 @@ The runtime does not grant authority to merge, release, deploy, spend money, acc
 - Traceable decisions and technical debt
 - Resumable long-session execution
 - Explicit terminal states
+- Hierarchical policy resolution with monotonic safety constraints
+- Pre-action allow/warn/deny evaluation
+- Read-only identity and environment preflight
+- Non-destructive bootstrap with dry-run by default
+- Provider instruction projections with drift detection
+- Lowest-precedence developer preference profiles
+- Stable/experimental skill lifecycle
+- Provider-neutral local execution attribution
 
 ## Execution lifecycle
 
@@ -131,10 +170,15 @@ Graph-harness-sdlc/
   .opencode/commands/
   .claude/agents/
   skills/
+    registry.json
   specs/
   templates/
   docs/
     i18n/
+  graph_harness/
+    policy/
+    providers/
+    bootstrap/
   adr/
   examples/
   progress/

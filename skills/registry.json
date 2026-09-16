@@ -1,0 +1,47 @@
+{
+  "schema_version": "graph-harness.skills.v1",
+  "skills": [
+    {
+      "id": "db-migration-review",
+      "path": "db-migration-review/skill.md",
+      "status": "stable",
+      "description": "Review database changes, migrations, rollback paths, and data-integrity risks."
+    },
+    {
+      "id": "i18n-accessibility-review",
+      "path": "i18n-accessibility-review/skill.md",
+      "status": "stable",
+      "description": "Review internationalization and accessibility requirements before closure."
+    },
+    {
+      "id": "production-readiness-review",
+      "path": "production-readiness-review/skill.md",
+      "status": "stable",
+      "description": "Evaluate SHIP-mode production readiness across operational quality gates."
+    },
+    {
+      "id": "prompt-contract-review",
+      "path": "prompt-contract-review/skill.md",
+      "status": "stable",
+      "description": "Review operational prompt contracts, boundaries, outputs, and stop conditions."
+    },
+    {
+      "id": "security-review",
+      "path": "security-review/skill.md",
+      "status": "stable",
+      "description": "Review trust boundaries, secrets, authorization, dependencies, and destructive operations."
+    },
+    {
+      "id": "spec-authoring",
+      "path": "spec-authoring/skill.md",
+      "status": "stable",
+      "description": "Create testable requirements, design, tasks, boundaries, and verification plans."
+    },
+    {
+      "id": "test-strategy",
+      "path": "test-strategy/skill.md",
+      "status": "stable",
+      "description": "Design a verification strategy appropriate to the feature and operating mode."
+    }
+  ]
+}
