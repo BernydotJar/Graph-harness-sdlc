@@ -11,6 +11,7 @@ from .bootstrap import apply_bootstrap, run_preflight
 from .doctor import run_doctor
 from .model import GateResult, NodeStatus, ValidationError
 from .policy import ActionRequest, Decision, PolicyLayer, evaluate_action, resolve_policy
+from .product_acceptance import evaluate_files
 from .profiles import DeveloperProfile
 from .providers import get_provider_adapter, provider_ids
 from .runtime import GraphRuntime
@@ -35,6 +36,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--project", help="Path to graph-harness.project.v1 JSON for runtime commands")
     parser.add_argument("--events", help="Path to append-only event JSONL for runtime commands")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    acceptance = subparsers.add_parser("product-acceptance", help="Fail-closed customer-action + production acceptance gate")
+    acceptance.add_argument("--manifest", required=True)
+    acceptance.add_argument("--evidence", required=True)
+    acceptance.add_argument("--repo-root", required=True)
+    acceptance.add_argument("--source-revision", required=True)
+    acceptance.add_argument("--production-revision")
+    acceptance.add_argument("--pretty", action="store_true")
 
     subparsers.add_parser("validate", help="Validate project, event chain, and projected state")
     status = subparsers.add_parser("status", help="Render typed graph state")
@@ -185,6 +194,16 @@ def _runtime(args: argparse.Namespace) -> GraphRuntime:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
+        if args.command == "product-acceptance":
+            assessment = evaluate_files(
+                args.manifest,
+                args.evidence,
+                repo_root=args.repo_root,
+                source_revision=args.source_revision,
+                production_revision=args.production_revision,
+            )
+            _print_json(assessment, pretty=args.pretty)
+            return 0 if assessment["decision"] == "GO" else 2
         if args.command in _RUNTIME_COMMANDS:
             return _handle_runtime(args)
         if args.command == "policy-resolve":
