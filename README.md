@@ -149,6 +149,14 @@ pending -> spec_ready -> approved -> ready -> running -> review -> done
 
 **SHIP** adds security, data integrity, performance, failure modes, accessibility, observability, and operational readiness.
 
+## Business-action product acceptance
+
+`python3 -m graph_harness product-acceptance ...` evaluates implementation,
+reachable UI actions, real customer journeys, and the deployed revision separately.
+Passing isolated E2Es never implies a module is complete. See
+[Product Acceptance](docs/product-acceptance.md) for the fail-closed manifest,
+independent evidence requirements, and examples for LUMA and an agrochemical customer.
+
 ## Completion semantics
 
 Execution continues until the repository reaches one of these terminal states:
